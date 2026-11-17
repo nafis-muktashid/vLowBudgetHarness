@@ -1,5 +1,7 @@
 /.toolchain/
 /target/
 /models/
+/server/
 Cargo.lock
 activate.ps1
+.env

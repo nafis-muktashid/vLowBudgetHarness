@@ -93,3 +93,67 @@ impl ToolCall{
         serde_json::from_value(combined).map_err(|e| format!("Invalid tool call '{}': {}", self.function.name, e))
     }
 }
+
+pub fn tool_definitions()-> serde_json::Value{
+    serde_json::json!([
+        {
+            "type": "function",
+            "function": {
+                "name": "read_file",
+                "description": "Read the contents of a file",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "path": {"type": "string", "description": "The path to the file to read"},
+                    },
+                    "required": ["path"]
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "search",
+                "description": "Search for files matching a text pattern",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "pattern": {"type": "string", "description": "Text pattern to search for"},
+                        "path": {"type": "string", "description": "File or directory path to search in"},
+                    },
+                    "required": ["pattern", "path"]
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "replace_string",
+                "description": "Replace a string in a file",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "path": {"type": "string", "description": "The path to the file to modify"},
+                        "old": {"type": "string", "description": "The string to replace"},
+                        "new": {"type": "string", "description": "The replacement string"},
+                    },
+                    "required": ["path", "old", "new"]
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "run_command",
+                "description": "Execute a shell command in the project directory",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "command": {"type": "string", "description": "The command to execute"},
+                    },
+                    "required": ["command"]
+                }
+            }
+        }
+    ])
+}
